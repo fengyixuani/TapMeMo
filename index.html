@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Supplementary Video Results — Anonymous Submission</title>
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-brand">Supplementary Videos</span>
+    <ul class="nav-links">
+      <li><a href="#handles">Handle Prediction</a></li>
+      <li><a href="#topologies">Non-Humanoid Topologies</a></li>
+      <li><a href="#mesh">Mesh Quality</a></li>
+      <li><a href="#ablation">Weak-Supervision Ablation</a></li>
+      <li><a href="#skinning">Skinned Motion</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <p class="kicker">Anonymous submission under review</p>
+  <h1>Supplementary Video Results</h1>
+  <p class="hero-sub">Handle-based motion generation for skeleton-free 3D characters</p>
+  <p class="hero-note">
+    Every clip is rendered at 8&nbsp;fps and loops automatically; use the player controls to scrub
+    frame by frame. Each section is tagged with the reviewer comment it answers, and mirrors the
+    corresponding figure in the response letter.
+  </p>
+</header>
+
+<main>
+
+<section id="handles" class="section">
+  <div class="section-head">
+    <span class="tag">Reviewer #1 &middot; Comment 1.2</span>
+    <h2>Handle Prediction on Complex Morphologies</h2>
+    <p class="lead">
+      Handle predictions on a multi-limbed creature, an abstract shape and an object with thin
+      structures. A handle is placed at the weighted centre of the region it governs, so its
+      position follows the learned part decomposition rather than an arbitrary cluster.
+      Regions that appear to carry no handle are still deformed: under Eq.&nbsp;6 every vertex is a
+      weighted blend of its surrounding handles, and the Spring Loss keeps adjacent handle
+      distances stable so the parts bend instead of tearing.
+    </p>
+  </div>
+  <div class="grid grid-3">
+    <figure>
+      <video src="static/videos/scorpion.mp4" controls loop muted autoplay playsinline preload="metadata"></video>
+      <figcaption>(a) multi-limbed creature</figcaption>
+    </figure>
+    <figure>
+      <video src="static/videos/hand.mp4" controls loop muted autoplay playsinline preload="metadata"></video>
+      <figcaption>(b) abstract shape</figcaption>
+    </figure>
+    <figure>
+      <video src="static/videos/tree.mp4" controls loop muted autoplay playsinline preload="metadata"></video>
+      <figcaption>(c) thin structures</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="topologies" class="section">
+  <div class="section-head">
+    <span class="tag">Reviewer #1 &middot; Comment 1.3</span>
+    <h2>Generalization to Non-Humanoid Topologies</h2>
+    <p class="lead">
+      Although the motion prior is learned from human capture data, it does not force non-humanoid
+      characters into anthropomorphic postures: the horse walks on four legs. Handles are predicted
+      from the mesh itself and the motion is additionally conditioned on the character's shape.
+      For the bird, one handle covers each wing so it moves as a rigid body, while the Spring Loss
+      imposes a skeleton-like length constraint without a skeleton.
+    </p>
+  </div>
+  <div class="grid grid-2">
+    <figure>
+      <video src="static/videos/horse_quad.mp4" controls loop muted autoplay playsinline preload="metadata"></video>
+      <figcaption>(a) quadruped &mdash; horse</figcaption>
+    </figure>
+    <figure>
+      <video src="static/videos/bird.mp4" controls loop muted autoplay playsinline preload="metadata"></video>
+      <figcaption>(b) bird &mdash; structural integrity of the wings</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="mesh" class="section">
+  <div class="section-head">
+    <span class="tag">Reviewer #1 &middot; Comment 1.4</span>
+    <h2>Mesh Quality Comparison</h2>
+    <p class="lead">
+      Side-by-side comparison against text-to-3D baselines. Our meshes contain fewer redundant faces
+      and more uniform triangles: QEM decimation collapses the edges that affect the surface least,
+      and isotropic remeshing drives vertex degrees towards six, avoiding sliver triangles that
+      break down under deformation.
+    </p>
+  </div>
+  <div class="stack">
+    <figure>
+      <img src="static/images/mesh_ours.png" alt="Generated meshes produced by our method" loading="lazy">
+      <figcaption>(a) ours</figcaption>
+    </figure>
+    <figure>
+      <img src="static/images/mesh_dreamgaussian.png" alt="Generated meshes produced by DreamGaussian" loading="lazy">
+      <figcaption>(b) DreamGaussian</figcaption>
+    </figure>
+    <figure>
+      <img src="static/images/mesh_zero123.png" alt="Generated meshes produced by Zero-1-to-3" loading="lazy">
+      <figcaption>(c) Zero-1-to-3</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="ablation" class="section">
+  <div class="section-head">
+    <span class="tag">Reviewer #1 &middot; Comment 1.5</span>
+    <h2>Weak-Supervision Ablation on a Non-Human Character</h2>
+    <p class="lead">
+      Visual ablation of the Spring Loss and the Adversarial Loss on a jellyfish, a character with no
+      ground-truth motion. The mesh does not collapse, but the artifacts are clearly visible: without
+      the Spring Loss the tentacles stretch and contract, since nothing penalises changes in the
+      rest-pose distances between adjacent handles; without the Adversarial Loss the deformation
+      shows local distortions, since the discriminator no longer pulls handle-driven motion towards
+      the skeleton-driven prior; without both, global structure and local motion are unconstrained.
+    </p>
+  </div>
+  <div class="grid grid-2">
+    <figure>
+      <video src="static/videos/jelly_full.mp4" controls loop muted autoplay playsinline preload="metadata"></video>
+      <figcaption>(a) full model</figcaption>
+    </figure>
+    <figure>
+      <video src="static/videos/jelly_no_spring.mp4" controls loop muted autoplay playsinline preload="metadata"></video>
+      <figcaption>(b) w/o Spring Loss</figcaption>
+    </figure>
+    <figure>
+      <video src="static/videos/jelly_no_adv.mp4" controls loop muted autoplay playsinline preload="metadata"></video>
+      <figcaption>(c) w/o Adversarial Loss</figcaption>
+    </figure>
+    <figure>
+      <video src="static/videos/jelly_no_both.mp4" controls loop muted autoplay playsinline preload="metadata"></video>
+      <figcaption>(d) w/o Spring Loss and Adversarial Loss</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="skinning" class="section">
+  <div class="section-head">
+    <span class="tag">Reviewer #2 &middot; Comment 2.2</span>
+    <h2>Skinned Motion Clip</h2>
+    <p class="lead">
+      Full clip of a generated horse motion with skinning deformation, provided so that temporal
+      artifacts such as jitter or foot floating can be judged from video rather than static frames.
+    </p>
+  </div>
+  <div class="grid grid-1">
+    <figure>
+      <video src="static/videos/horse_skinned.mp4" controls loop muted autoplay playsinline preload="metadata"></video>
+      <figcaption>Generated horse motion with skinning deformation</figcaption>
+    </figure>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Supplementary material for an anonymous submission under review. Videos loop at 8&nbsp;fps, 48 frames each.</p>
+</footer>
+</main>
+
+</body>
+</html>
